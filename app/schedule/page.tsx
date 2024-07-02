@@ -1,6 +1,6 @@
 "use client";
 
-export const Schedule = () => {
+const Schedule = () => {
     return (
         <main className="flex min-h-screen flex-col items-center gap-12 py-48 px-24">
             <div className="flex flex-col items-center justify-center w-full h-full">

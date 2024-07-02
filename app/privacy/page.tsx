@@ -1,5 +1,5 @@
 
-export const Privacy = () => {
+const Privacy = () => {
     return (
         <main className="flex min-h-screen flex-col items-start gap-12 py-48 px-24">
             <div className="flex flex-col justify-center gap-8 max-w-[75ch]">

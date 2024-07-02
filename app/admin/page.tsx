@@ -223,7 +223,7 @@ export default withPageAuthRequired(function Admin() {
         setCurrentUser(fetchedUser);
       });
     }
-  }, [user]);
+  }, [user, isLoading]);
 
   return (
     <main className="flex min-h-screen flex-col items-start gap-12 py-48 px-24">
@@ -238,12 +238,12 @@ export default withPageAuthRequired(function Admin() {
                 <thead>
                   <tr className="border-b-[1px] border-slate-200 text-slate-400 text-sm uppercase">
                     <th className="text-start p-4 font-medium"></th>
-                    <th className="text-start p-4 font-medium">Name</th>
-                    <th className="text-start p-4 font-medium">Role</th>
-                    <th className="text-start p-4 font-medium">RSVP'd</th>
-                    <th className="text-start p-4 font-medium">Diet Restrictions</th>
-                    <th className="text-start p-4 font-medium">Song Recs</th>
-                    <th className="text-start p-4 font-medium">Brunch Invite</th>
+                    <th className="text-start p-4 font-medium">{`Name`}</th>
+                    <th className="text-start p-4 font-medium">{`Role`}</th>
+                    <th className="text-start p-4 font-medium">{`RSVP'd`}</th>
+                    <th className="text-start p-4 font-medium">{`Diet Restrictions`}</th>
+                    <th className="text-start p-4 font-medium">{`Song Recs`}</th>
+                    <th className="text-start p-4 font-medium">{`Brunch Invite`}</th>
                   </tr>
                 </thead>
 

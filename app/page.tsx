@@ -73,7 +73,7 @@ export default withPageAuthRequired(function Home() {
       });
 
     }
-  }, [user]);
+  }, [user, isLoading]);
 
   /**
    * Every time the currentUser state changes, update the user in the database.

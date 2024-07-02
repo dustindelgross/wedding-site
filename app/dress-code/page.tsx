@@ -73,7 +73,7 @@ const DressCode = () => {
     ];
 
     const drawerContent = [
-        (<div className="mx-auto max-w-2xl space-y-12 text-neutral-400 flex flex-wrap justify-center items-center py-6">
+        (<div key={0} className="mx-auto max-w-2xl space-y-12 text-neutral-400 flex flex-wrap justify-center items-center py-6">
             <div className="space-y-4">
                 <h2 className="text-4xl font-bold ">For Our Masc Folks</h2>
                 <p className="max-w-[75ch]">{`Use this lookbook to inspire your outfit for the wedding. Wear your fanciest shirt that you never thought you'd ever get the chance to wear. If you have a pair of boots, some jewelry, or a blazer that you haven't worn because it's too "over-the-top" - this is your chance to wear it!`}</p>
@@ -83,7 +83,7 @@ const DressCode = () => {
                 <SwipeCarousel imgs={mascImgs} />
             </div>
         </div>),
-        (<div className="mx-auto max-w-2xl space-y-12 text-neutral-400 flex flex-wrap justify-center items-center py-6">
+        (<div key={1} className="mx-auto max-w-2xl space-y-12 text-neutral-400 flex flex-wrap justify-center items-center py-6">
             <div className="space-y-4">
                 <h2 className="text-4xl font-bold ">For Our Femme Folks</h2>
                 <p className="max-w-[75ch]">{`Use this lookbook to inspire your outfit for the wedding. Wear your fanciest dress that you never thought you'd ever get the chance to wear. If you have a pair of heels, some jewelry, or a gown that you haven't worn because it's so unbelievably extravagant - this is your chance to wear it!`}</p>

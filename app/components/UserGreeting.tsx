@@ -21,7 +21,7 @@ export default withPageAuthRequired(function UserGreeting() {
       });
 
     }
-  }, [user]);
+  }, [user, isLoading]);
 
     if (!user && !isLoading) {
         return (

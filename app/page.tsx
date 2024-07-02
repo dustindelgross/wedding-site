@@ -1,113 +1,223 @@
-import Image from "next/image";
+"use client";
+import { User, formatFetcher } from "./components/users/utils";
+import UserGreeting from "./components/UserGreeting";
+import ShiftingCountdown from "./components/ShiftingCountdown";
+import { Button } from "./components/Button";
+import { useEffect, useState, MouseEventHandler } from "react";
+import { laBelleAurore } from "./components/fonts";
+import { Drawer } from "./components/Drawer";
+import { withPageAuthRequired, useUser } from '@auth0/nextjs-auth0/client';
 
-export default function Home() {
+interface SectionProps {
+  title: string;
+  desc: string;
+  cta: string;
+  clickHandler?: MouseEventHandler<HTMLButtonElement>;
+  href?: string;
+  external?: boolean;
+}
+
+
+const Section = ({ title, desc, cta, clickHandler, href, external }: SectionProps) => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className="flex flex-col justify-center items-center py-24 odd:bg-stone-200 w-[100vw]">
+      <div className="flex flex-col justify-center items-center gap-6">
+        <h2 className="text-4xl font-bold text-center ">{title}</h2>
+        <p className="max-w-[75ch]">{desc}</p>
+        <div className="max-w-full w-auto">
+          <Button text={cta} href={href} external={external} handleClick={clickHandler} />
         </div>
       </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   );
 }
+
+
+export default withPageAuthRequired(function Home() {
+
+  const { user, isLoading } = useUser();
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [rehearsalOpen, setRehearsalOpen] = useState(false);
+
+
+  const tailwind = `
+    relative z-0 flex items-center gap-2 overflow-hidden rounded border-[1px] 
+    border-blue-700 px-4 py-2 font-bold
+    uppercase text-blue-700 transition-all duration-500
+    
+    before:absolute before:inset-0
+    before:-z-10 before:translate-x-[150%]
+    before:translate-y-[150%] before:scale-[2.5]
+    before:rounded-[100%] before:bg-blue-700
+    before:transition-transform before:duration-1000
+    before:content-[""]
+
+    hover:scale-105 hover:text-neutral-300
+    hover:before:translate-x-[0%]
+    hover:before:translate-y-[0%]
+    active:scale-95`;
+
+
+  useEffect(() => {
+
+    if (user && !isLoading) {
+      formatFetcher(`/api/users`, 'GET', { email: user.email }).then((data) => {
+        let fetchedUser = data.rows[0] as User;
+        if (!fetchedUser) {
+          formatFetcher(`/api/users`, 'POST', { email: user.email, name: user.name }).then((data) => {
+            fetchedUser = data.rows[0] as User;
+          });
+        }
+        setCurrentUser(fetchedUser);
+      });
+
+    }
+  }, [user]);
+
+  /**
+   * Every time the currentUser state changes, update the user in the database.
+   */
+  useEffect(() => {
+    formatFetcher(`/api/users`, 'PUT', { ...currentUser });
+  }, [currentUser]);
+
+
+  if (user && !isLoading && currentUser) {
+
+
+    return (
+      <main className="flex min-h-screen flex-col items-center gap-12 py-48">
+        <ShiftingCountdown />
+        <div className="flex flex-col justify-center items-center gap-6 max-w-[75ch]">
+          <h1 className={`text-4xl font-bold text-center max-w-[75ch] ${laBelleAurore.className}`}>{`Welcome to the Wedding${currentUser?.name ? `, ${currentUser.name}` : ""}`}</h1>
+          {currentUser?.rsvp === false || !currentUser?.rsvp && (
+            <p className="text-center">Please RSVP by August 1st, 2024</p>
+          )}
+          {currentUser && (
+            <div className="flex flex-col gap-4 items-center">
+              <h2 className="text-2xl font-bold">RSVP</h2>
+              <h3 className="text-xl">Your current RSVP status: <b>{currentUser.rsvp === false || !currentUser.rsvp ? "Not Attending" : "Attending"}</b></h3>
+              {currentUser.rsvp === false || !currentUser.rsvp ?
+                <button className={tailwind} onClick={function (this: HTMLButtonElement) {
+                  formatFetcher(`/api/users`, 'GET', { email: user?.email }).then((data) => {
+                    let rsvpUser = data.rows[0] as User;
+                    setCurrentUser({ ...rsvpUser, rsvp: true });
+                  });
+                }}>{`I'm attending`}</button> :
+                <button className={tailwind} onClick={function (this: HTMLButtonElement) {
+                  formatFetcher(`/api/users`, 'GET', { email: user?.email }).then((data) => {
+                    let rsvpUser = data.rows[0] as User;
+                    setCurrentUser({ ...rsvpUser, rsvp: false });
+                  });
+                }}>{`I won't be attending`}</button>
+              }
+            </div>
+          )}
+        </div>
+        <div className="flex flex-col justify-center items-center gap-12">
+        <Section
+          title={"The Venue"}
+          desc={"The wedding will be held at the beautiful Vaughan House in Forest, VA, on October 19th, 2024. Reception beginning at 4:00PM EST."}
+          cta={"View Venue Website"}
+          href={"https://vaughan-house.com/"}
+          external={true}
+        />
+
+        <Section
+          title={"Accommodations"}
+          desc={"There is a selection of hotel, Airbnb, and car rental options in the area, mostly around Lynchburg, VA."}
+          cta={"View Options"}
+          href={"/accommodations"}
+        />
+        <Section
+          title={"Dress Code"}
+          desc={"Back of the Closet affair. Wear your most dazzling attire, or come as you are."}
+          cta={"Learn More"}
+          href={"/dress-code"}
+        />
+        <Section
+          title={"The Food"}
+          desc={"We will be serving a variety of dishes, including vegetarian and vegan options."}
+          cta={"View Menu"}
+          clickHandler={() => {
+            setMenuOpen(true);
+          }}
+        />
+        {currentUser?.rehearsal_invite && (
+          <Section
+            title={"The Rehearsal Brunch"}
+            desc={"The rehearsal brunch will be held at the Vaughan House on October 18th, 2024 at 12:00pm EST. Afternoon brunch to follow from 3-6pm."}
+            cta={"More Info"}
+            clickHandler={() => setRehearsalOpen(true)}
+          />
+        )}
+        </div>
+        
+
+        <Drawer open={menuOpen} setOpen={setMenuOpen}>
+          <div className="mx-auto max-w-2xl space-y-4 text-neutral-400">
+            <h2 className="text-4xl font-bold ">The Menu</h2>
+            <p className="max-w-[75ch]">The menu is still coming together; check back here again soon for updates!</p>
+            <div className="max-w-full w-auto">
+
+            </div>
+          </div>
+        </Drawer>
+        {currentUser?.rehearsal_invite && (
+          <Drawer open={rehearsalOpen} setOpen={setRehearsalOpen}>
+            <div className="mx-auto max-w-2xl space-y-4 text-neutral-400">
+              <h2 className="text-4xl font-bold ">The Rehearsal Brunch</h2>
+              <p className="max-w-[75ch]">The wedding rehearsal will be held at the Vaughan House on October 18th, 2024, at 2:00PM EST, with brunch to follow from 3-6PM.</p>
+              <div className="max-w-full w-auto">
+
+              </div>
+            </div>
+          </Drawer>
+        )}
+
+
+      </main>
+    );
+  }
+});
+
+{/* <div className="flex flex-col justify-center items-center gap-6">
+          <h2 className="text-4xl font-bold text-center ">The Venue</h2>
+          <p className="max-w-[75ch]">The wedding will be held at the beautiful Vaughan House in Forest, VA, on October 19th, 2024. Reception beginning at 4:00PM EST.</p>
+          <div className="max-w-full w-auto">
+            <Button text={"View Venue Website"} href={"https://vaughan-house.com/"} external={true} />
+          </div>
+        </div>
+        <div className="flex flex-col justify-center items-center gap-6">
+          <h2 className="text-4xl font-bold text-center ">{`Accommodations`}</h2>
+          <p className="max-w-[75ch]">There is a selection of hotel, Airbnb, and car rental options in the area, mostly around Lynchburg, VA.</p>
+          <div className="max-w-full w-auto">
+            <Button text={"View Options"} href={"/accommodations"} />
+          </div>
+        </div>
+        <div className="flex flex-col justify-center items-center gap-6">
+          <h2 className="text-4xl font-bold text-center ">{`Dress Code`}</h2>
+          <p className="max-w-[75ch]">Back of the Closet affair. Wear your most dazzling attire, or come as you are.</p>
+          <div className="max-w-full w-auto">
+            <Button text={"Learn More"} href={"/dress-code"} />
+          </div>
+        </div>
+        <div className="flex flex-col justify-center items-center gap-6">
+          <h2 className="text-4xl font-bold ">The Food</h2>
+          <p className="max-w-[75ch]">We will be serving a variety of dishes, including vegetarian and vegan options.</p>
+          <div className="max-w-full w-auto">
+            <Button text={"View Menu"} handleClick={() => {
+              setMenuOpen(true);
+            }} />
+          </div>
+        </div>
+        {currentUser?.rehearsal_invite && (
+          <div className="flex flex-col justify-center items-center gap-6">
+            <h2 className="text-4xl font-bold ">The Rehearsal Brunch</h2>
+            <p className="max-w-[75ch]">The rehearsal brunch will be held at the Vaughan House on October 18th, 2024 at 12:00pm EST. Afternoon brunch to follow from 3-6pm.</p>
+            <div className="max-w-full w-auto">
+              <Button text={"More Info"} handleClick={() => setRehearsalOpen(true)} />
+            </div>
+          </div>
+        )} */}

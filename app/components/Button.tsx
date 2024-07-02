@@ -9,7 +9,7 @@ interface ButtonProps {
     handleClick?: MouseEventHandler<HTMLButtonElement>;
     withAnchor?: boolean;
     external?: boolean;
-}
+} 
 
 export const Button = ({ text, Icon, href, handleClick, withAnchor, external }: ButtonProps) => {
 

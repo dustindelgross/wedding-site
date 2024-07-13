@@ -257,8 +257,8 @@ export const POST = withApiAuthRequired(async function createUser(req: NextReque
 
     const res = new NextResponse();
     const body = await req.json();
-    console.log(body);
     const session = await getSession(req, res);
+    const formatArray = (arr: string[]) => `{${arr.map((item) => `"${item}"`).join(', ')}}`;
 
     if (!session) {
         return NextResponse.json({ error: "Gotta be logged in, friend." });
@@ -292,7 +292,7 @@ export const POST = withApiAuthRequired(async function createUser(req: NextReque
             return NextResponse.json({ error: "User already exists." });
         }
 
-        let rx = new RegExp(`[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}`);
+        let rx = new RegExp(`[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}`);
 
         if (!rx.test(body.email)) {
             return NextResponse.json({ error: "Invalid email." });
@@ -321,7 +321,7 @@ export const POST = withApiAuthRequired(async function createUser(req: NextReque
     }
 
     if (!body.role) {
-        post.role = 'user';
+        post.role = 'guest';
     } else {
 
         if (!adminRoles.includes(sessionUser.rows[0].role)) {
@@ -360,8 +360,8 @@ export const POST = withApiAuthRequired(async function createUser(req: NextReque
         ${post.role},
         ${post.rsvp}, 
         ${post.rehearsal_invite}, 
-        {${post.diet_restrictions.join(', ')}},
-        {${post.song_recs.join(', ')}}
+        ${formatArray(post.diet_restrictions)},
+        ${formatArray(post.song_recs)}
     )`;
 
     return NextResponse.json(exec);

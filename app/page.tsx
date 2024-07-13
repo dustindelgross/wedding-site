@@ -80,6 +80,7 @@ export default withPageAuthRequired(function Home() {
    */
   useEffect(() => {
     formatFetcher(`/api/users`, 'PUT', { ...currentUser });
+    console.log(currentUser)
   }, [currentUser]);
 
 

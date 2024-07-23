@@ -1,6 +1,5 @@
 "use client";
 import { User, formatFetcher } from "./components/users/utils";
-import UserGreeting from "./components/UserGreeting";
 import ShiftingCountdown from "./components/ShiftingCountdown";
 import { Button } from "./components/Button";
 import { useEffect, useState, MouseEventHandler } from "react";
@@ -42,42 +41,51 @@ export default withPageAuthRequired(function Home() {
 
 
   const tailwind = `
-    relative z-0 flex items-center gap-2 overflow-hidden rounded border-[1px] 
-    border-blue-700 px-4 py-2 font-bold
-    uppercase text-blue-700 transition-all duration-500
-    
-    before:absolute before:inset-0
-    before:-z-10 before:translate-x-[150%]
-    before:translate-y-[150%] before:scale-[2.5]
-    before:rounded-[100%] before:bg-blue-700
-    before:transition-transform before:duration-1000
-    before:content-[""]
+  relative z-0 flex items-center gap-2 overflow-hidden rounded border-[1px] 
+  border-blue-700 px-4 py-2 font-bold
+  uppercase text-blue-700 transition-all duration-500
+  
+  before:absolute before:inset-0
+  before:-z-10 before:translate-x-[150%]
+  before:translate-y-[150%] before:scale-[2.5]
+  before:rounded-[100%] before:bg-blue-700
+  before:transition-transform before:duration-1000
+  before:content-[""]
 
-    hover:scale-105 hover:text-neutral-300
-    hover:before:translate-x-[0%]
-    hover:before:translate-y-[0%]
-    active:scale-95`;
-
+  hover:scale-105 hover:text-neutral-300
+  hover:before:translate-x-[0%]
+  hover:before:translate-y-[0%]
+  active:scale-95`;
 
   useEffect(() => {
-
     if (user && !isLoading) {
-      formatFetcher(`/api/users`, 'GET', { email: user.email }).then((data) => {
-        let fetchedUser = data.rows[0] as User;
-        if (!fetchedUser) {
-          formatFetcher(`/api/users`, 'POST', { email: user.email, name: user.name }).then((data) => {
-            fetchedUser = data.rows[0] as User;
-          });
+      const fetchUser = async () => {
+        try {
+          const data = await formatFetcher(`/api/users/?email=${user.email}`, 'GET');
+          if (data) {
+            const userData = data.rows[0];
+            if (userData) {
+              setCurrentUser(userData);
+            } else {
+              const newUser = {
+                email: user.email,
+                name: user.name,
+                role: 'guest',
+              };
+              const createResponse = await formatFetcher(`/api/users`, 'POST', newUser);
+              if (createResponse.ok) {
+                setCurrentUser(newUser);
+              }
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
         }
-        setCurrentUser(fetchedUser);
-      });
-
+      };
+      fetchUser();
     }
   }, [user, isLoading]);
 
-  /**
-   * Every time the currentUser state changes, update the user in the database.
-   */
   useEffect(() => {
     formatFetcher(`/api/users`, 'PUT', { ...currentUser });
     console.log(currentUser)
@@ -86,6 +94,7 @@ export default withPageAuthRequired(function Home() {
 
   if (user && !isLoading && currentUser) {
 
+    /* The rest of the code below */
 
     return (
       <main className="flex min-h-screen flex-col items-center gap-12 py-48">
@@ -117,44 +126,44 @@ export default withPageAuthRequired(function Home() {
           )}
         </div>
         <div className="flex flex-col justify-center items-center gap-12">
-        <Section
-          title={"The Venue"}
-          desc={"The wedding will be held at the beautiful Vaughan House in Forest, VA, on October 19th, 2024. Reception beginning at 4:00PM EST."}
-          cta={"View Venue Website"}
-          href={"https://vaughan-house.com/"}
-          external={true}
-        />
-
-        <Section
-          title={"Accommodations"}
-          desc={"There is a selection of hotel, Airbnb, and car rental options in the area, mostly around Lynchburg, VA."}
-          cta={"View Options"}
-          href={"/accommodations"}
-        />
-        <Section
-          title={"Dress Code"}
-          desc={"Back of the Closet affair. Wear your most dazzling attire, or come as you are."}
-          cta={"Learn More"}
-          href={"/dress-code"}
-        />
-        <Section
-          title={"The Food"}
-          desc={"We will be serving a variety of dishes, including vegetarian and vegan options."}
-          cta={"View Menu"}
-          clickHandler={() => {
-            setMenuOpen(true);
-          }}
-        />
-        {currentUser?.rehearsal_invite && (
           <Section
-            title={"The Rehearsal Brunch"}
-            desc={"The rehearsal brunch will be held at the Vaughan House on October 18th, 2024 at 12:00pm EST. Afternoon brunch to follow from 3-6pm."}
-            cta={"More Info"}
-            clickHandler={() => setRehearsalOpen(true)}
+            title={"The Venue"}
+            desc={"The wedding will be held at the beautiful Vaughan House in Forest, VA, on October 19th, 2024. Reception beginning at 4:00PM EST."}
+            cta={"View Venue Website"}
+            href={"https://vaughan-house.com/"}
+            external={true}
           />
-        )}
+
+          <Section
+            title={"Accommodations"}
+            desc={"There is a selection of hotel, Airbnb, and car rental options in the area, mostly around Lynchburg, VA."}
+            cta={"View Options"}
+            href={"/accommodations"}
+          />
+          <Section
+            title={"Dress Code"}
+            desc={"Back of the Closet affair. Wear your most dazzling attire, or come as you are."}
+            cta={"Learn More"}
+            href={"/dress-code"}
+          />
+          <Section
+            title={"The Food"}
+            desc={"We will be serving a variety of dishes, including vegetarian and vegan options."}
+            cta={"View Menu"}
+            clickHandler={() => {
+              setMenuOpen(true);
+            }}
+          />
+          {currentUser?.rehearsal_invite && (
+            <Section
+              title={"The Rehearsal Brunch"}
+              desc={"The rehearsal brunch will be held at the Vaughan House on October 18th, 2024 at 12:00pm EST. Afternoon brunch to follow from 3-6pm."}
+              cta={"More Info"}
+              clickHandler={() => setRehearsalOpen(true)}
+            />
+          )}
         </div>
-        
+
 
         <Drawer open={menuOpen} setOpen={setMenuOpen}>
           <div className="mx-auto max-w-2xl space-y-4 text-neutral-400">
@@ -183,42 +192,60 @@ export default withPageAuthRequired(function Home() {
   }
 });
 
+/* 
+ try {
+        let fetchedUser = formatFetcher(`/api/users`, 'GET', { email: user.email })
+
+        if (!fetchedUser) {
+          formatFetcher(`/api/users`, 'POST', { email: user.email, name: user.name }).then((data) => {
+            fetchedUser = data.rows[0] as User;
+          });
+        }
+        setCurrentUser(fetchedUser);
+      } catch {
+
+      }
+
+ */
+
 {/* <div className="flex flex-col justify-center items-center gap-6">
-          <h2 className="text-4xl font-bold text-center ">The Venue</h2>
-          <p className="max-w-[75ch]">The wedding will be held at the beautiful Vaughan House in Forest, VA, on October 19th, 2024. Reception beginning at 4:00PM EST.</p>
-          <div className="max-w-full w-auto">
-            <Button text={"View Venue Website"} href={"https://vaughan-house.com/"} external={true} />
-          </div>
+        <h2 className="text-4xl font-bold text-center ">The Venue</h2>
+        <p className="max-w-[75ch]">The wedding will be held at the beautiful Vaughan House in Forest, VA, on October 19th, 2024. Reception beginning at 4:00PM EST.</p>
+        <div className="max-w-full w-auto">
+          <Button text={"View Venue Website"} href={"https://vaughan-house.com/"} external={true} />
         </div>
+      </div>
+      <div className="flex flex-col justify-center items-center gap-6">
+        <h2 className="text-4xl font-bold text-center ">{`Accommodations`}</h2>
+        <p className="max-w-[75ch]">There is a selection of hotel, Airbnb, and car rental options in the area, mostly around Lynchburg, VA.</p>
+        <div className="max-w-full w-auto">
+          <Button text={"View Options"} href={"/accommodations"} />
+        </div>
+      </div>
+      <div className="flex flex-col justify-center items-center gap-6">
+        <h2 className="text-4xl font-bold text-center ">{`Dress Code`}</h2>
+        <p className="max-w-[75ch]">Back of the Closet affair. Wear your most dazzling attire, or come as you are.</p>
+        <div className="max-w-full w-auto">
+          <Button text={"Learn More"} href={"/dress-code"} />
+        </div>
+      </div>
+      <div className="flex flex-col justify-center items-center gap-6">
+        <h2 className="text-4xl font-bold ">The Food</h2>
+        <p className="max-w-[75ch]">We will be serving a variety of dishes, including vegetarian and vegan options.</p>
+        <div className="max-w-full w-auto">
+          <Button text={"View Menu"} handleClick={() => {
+            setMenuOpen(true);
+          }} />
+        </div>
+      </div>
+      {currentUser?.rehearsal_invite && (
         <div className="flex flex-col justify-center items-center gap-6">
-          <h2 className="text-4xl font-bold text-center ">{`Accommodations`}</h2>
-          <p className="max-w-[75ch]">There is a selection of hotel, Airbnb, and car rental options in the area, mostly around Lynchburg, VA.</p>
+          <h2 className="text-4xl font-bold ">The Rehearsal Brunch</h2>
+          <p className="max-w-[75ch]">The rehearsal brunch will be held at the Vaughan House on October 18th, 2024 at 12:00pm EST. Afternoon brunch to follow from 3-6pm.</p>
           <div className="max-w-full w-auto">
-            <Button text={"View Options"} href={"/accommodations"} />
+            <Button text={"More Info"} handleClick={() => setRehearsalOpen(true)} />
           </div>
         </div>
-        <div className="flex flex-col justify-center items-center gap-6">
-          <h2 className="text-4xl font-bold text-center ">{`Dress Code`}</h2>
-          <p className="max-w-[75ch]">Back of the Closet affair. Wear your most dazzling attire, or come as you are.</p>
-          <div className="max-w-full w-auto">
-            <Button text={"Learn More"} href={"/dress-code"} />
-          </div>
-        </div>
-        <div className="flex flex-col justify-center items-center gap-6">
-          <h2 className="text-4xl font-bold ">The Food</h2>
-          <p className="max-w-[75ch]">We will be serving a variety of dishes, including vegetarian and vegan options.</p>
-          <div className="max-w-full w-auto">
-            <Button text={"View Menu"} handleClick={() => {
-              setMenuOpen(true);
-            }} />
-          </div>
-        </div>
-        {currentUser?.rehearsal_invite && (
-          <div className="flex flex-col justify-center items-center gap-6">
-            <h2 className="text-4xl font-bold ">The Rehearsal Brunch</h2>
-            <p className="max-w-[75ch]">The rehearsal brunch will be held at the Vaughan House on October 18th, 2024 at 12:00pm EST. Afternoon brunch to follow from 3-6pm.</p>
-            <div className="max-w-full w-auto">
-              <Button text={"More Info"} handleClick={() => setRehearsalOpen(true)} />
-            </div>
-          </div>
-        )} */}
+      )} */}
+
+      /* import UserGreeting from "./components/UserGreeting"; */

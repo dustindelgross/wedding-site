@@ -79,7 +79,7 @@ const DressCode = () => {
                 <p className="max-w-[75ch]">{`Use this lookbook to inspire your outfit for the wedding. Wear your fanciest shirt that you never thought you'd ever get the chance to wear. If you have a pair of boots, some jewelry, or a blazer that you haven't worn because it's too "over-the-top" - this is your chance to wear it!`}</p>
                 <p className="max-w-[75ch]">{`The only limitation is that we ask you to keep it formal. No jeans, shorts, or sneakers, please.`}</p>
             </div>
-            <div className=" w-full">
+            <div className="relative w-full">
                 <SwipeCarousel imgs={mascImgs} />
             </div>
         </div>),
@@ -89,15 +89,15 @@ const DressCode = () => {
                 <p className="max-w-[75ch]">{`Use this lookbook to inspire your outfit for the wedding. Wear your fanciest dress that you never thought you'd ever get the chance to wear. If you have a pair of heels, some jewelry, or a gown that you haven't worn because it's so unbelievably extravagant - this is your chance to wear it!`}</p>
                 <p className="max-w-[75ch]">{`The only limitation is that we ask you to keep it formal. No jeans, shorts, or sneakers, please.`}</p>
             </div>
-            <div className="w-full">
+            <div className="w-full relative">
                 <SwipeCarousel imgs={femmeImgs} />
             </div>
         </div>)
     ];
 
     return (
-        <main className="flex min-h-screen flex-col items-start py-48">
-            <div className="flex flex-col items-center justify-center w-full h-full">
+        <main className="flex min-h-screen flex-col items-start py-48 relative">
+            <div className="flex flex-col items-center justify-center w-full h-full relative">
                 {dressCodeContent.map((content, index) => {
                     return (
                         <TextParallaxContent

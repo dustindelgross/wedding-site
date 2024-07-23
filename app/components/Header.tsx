@@ -31,7 +31,7 @@ export const Header = () => {
         onClick={() => {
           setNavExpanded(false);
         }}
-        className="text-5xl font-bold text-blue-300 hover:text-blue-500 transition-colors duration-200 ease-in-out dark:hover:text-blue-300"
+        className="text-5xl font-bold text-blue-300 hover:text-blue-500 transition-colors duration-200 ease-in-out"
       >
         <Link
           href={href}
@@ -61,7 +61,7 @@ export const Header = () => {
             onClick={() => {
               setNavExpanded(false);
             }}
-            className={`text-4xl font-thin text-blue-600 hover:text-blue-700 transition-colors duration-200 ease-in-out dark:hover:text-blue-300`}
+            className={`text-4xl font-thin text-blue-600 hover:text-blue-700 transition-colors duration-200 ease-in-out `}
           >
             {`Dustin + Bella`}
           </Link>
@@ -73,7 +73,7 @@ export const Header = () => {
             }}
           >
             <motion.div
-              className="h-[2px] w-full rounded-full bg-blue-600 group-hover:bg-blue-700 transition duration-200 ease-in-out dark:bg-slate-100 dark:bg-opacity-90"
+              className="h-[2px] w-full rounded-full bg-blue-600 group-hover:bg-blue-700 transition duration-200 ease-in-out"
               transition={{
                 duration: 0.2,
               }}
@@ -89,7 +89,7 @@ export const Header = () => {
               }}
             ></motion.div>
             <motion.div
-              className="h-[2px] w-full rounded-full bg-blue-600 group-hover:bg-blue-700 transition duration-200 ease-in-out dark:bg-slate-100 dark:bg-opacity-90"
+              className="h-[2px] w-full rounded-full bg-blue-600 group-hover:bg-blue-700 transition duration-200 ease-in-out"
               initial={{
                 rotateX: 0,
               }}
@@ -101,7 +101,7 @@ export const Header = () => {
               }}
             ></motion.div>
             <motion.div
-              className="h-[2px] w-full rounded-full bg-blue-600 group-hover:bg-blue-700 transition duration-200 ease-in-out dark:bg-slate-100 dark:bg-opacity-90"
+              className="h-[2px] w-full rounded-full bg-blue-600 group-hover:bg-blue-700 transition duration-200 ease-in-out"
               transition={{
                 duration: 0.2,
                 ease: "easeInOut",
@@ -126,7 +126,7 @@ export const Header = () => {
       <AnimatePresence>
         {navExpanded && (
           <motion.div
-            className="z-36 fixed bottom-0 top-0 w-screen bg-blue-950 bg-opacity-95 dark:bg-blue-900 dark:bg-opacity-90"
+            className="z-36 fixed bottom-0 top-0 w-screen bg-blue-950 bg-opacity-95"
             initial={{
               opacity: 0,
               y: 100,

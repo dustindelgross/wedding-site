@@ -34,17 +34,17 @@ const DressCode = () => {
             heading: "Dress to Express",
 
             children: (
-                <div className="relative w-full flex justify-evenly items-start pb-24 pt-12 z-2 px-12">
-                    <div className="w-1/2 flex flex-col items-start justify-center">
+                <div className="relative w-full flex flex-wrap flex-row justify-center items-start gap-6 pb-24 pt-12 z-2 ">
+                    <div className="flex flex-col items-start justify-center">
                         <h2 className="text-4xl font-bold">For <span className="text-indigo-400">Masc</span> Folks</h2>
                     </div>
-                    <div className="max-w-[75ch] space-y-6 text-lg">
-                        <p>{`If you're feeling bold, we encourage you to wear your most extravagant outfit. Sequins, patterns, flowy garments, vibrant colors, and bold accessories are all encouraged.`}</p>
-                        <Button text="Open Look Book" handleClick={() => {
-                            setDrawer(0);
-                            setMenuOpen(true);
-                        }} />
-                    </div>
+
+                    <p className="text-lg max-w-[75ch]">{`If you're feeling bold, we encourage you to wear your most extravagant outfit. Sequins, patterns, flowy garments, vibrant colors, and bold accessories are all encouraged.`}</p>
+                    <Button text="Open Look Book" handleClick={() => {
+                        setDrawer(0);
+                        setMenuOpen(true);
+                    }} />
+
 
                 </div>
             )
@@ -55,25 +55,23 @@ const DressCode = () => {
             heading: "Upstage the Bride",
 
             children: (
-                <div className="relative w-full flex justify-evenly items-start pb-24 pt-12 z-2 px-12">
-                    <div className="w-1/2 flex flex-col items-start justify-center">
+                <div className="relative w-full flex flex-wrap flex-row justify-center items-start gap-6 pb-24 pt-12 z-2 ">
+                    <div className="flex flex-col items-start justify-center">
                         <h2 className="text-4xl font-bold">For <span className="text-indigo-400">Femme</span> Folks</h2>
                     </div>
-                    <div className="max-w-[75ch] space-y-6 text-lg">
-                        <p>{`This is your moment to sparkle! Don your most vibrant garments, bold patterns, and statement accessories. We encourage you to wear something that makes you feel like the star of the show. This is your chance to truly feel as confident and fabulous as we know you are.`}</p>
-                        <Button text="Open Look Book" handleClick={() => {
-                            setDrawer(1);
-                            setMenuOpen(true);
-                        }} />
-                    </div>
 
+                    <p className="text-lg max-w-[75ch]">{`This is your moment to sparkle! Don your most vibrant garments, bold patterns, and statement accessories. We encourage you to wear something that makes you feel like the star of the show. This is your chance to truly feel as confident and fabulous as we know you are.`}</p>
+                    <Button text="Open Look Book" handleClick={() => {
+                        setDrawer(1);
+                        setMenuOpen(true);
+                    }} />
                 </div>
             )
         },
     ];
 
     const drawerContent = [
-        (<div key={0} className="mx-auto max-w-2xl space-y-12 text-neutral-400 flex flex-wrap justify-center items-center py-6">
+        (<div key={0} className="mx-auto space-y-12 text-neutral-400 flex flex-wrap justify-center items-center py-6">
             <div className="space-y-4">
                 <h2 className="text-4xl font-bold ">For Our Masc Folks</h2>
                 <p className="max-w-[75ch]">{`Use this lookbook to inspire your outfit for the wedding. Wear your fanciest shirt that you never thought you'd ever get the chance to wear. If you have a pair of boots, some jewelry, or a blazer that you haven't worn because it's too "over-the-top" - this is your chance to wear it!`}</p>
@@ -83,7 +81,7 @@ const DressCode = () => {
                 <SwipeCarousel imgs={mascImgs} />
             </div>
         </div>),
-        (<div key={1} className="mx-auto max-w-2xl space-y-12 text-neutral-400 flex flex-wrap justify-center items-center py-6">
+        (<div key={1} className="mx-auto space-y-12 text-neutral-400 flex flex-wrap justify-center items-center py-6">
             <div className="space-y-4">
                 <h2 className="text-4xl font-bold ">For Our Femme Folks</h2>
                 <p className="max-w-[75ch]">{`Use this lookbook to inspire your outfit for the wedding. Wear your fanciest dress that you never thought you'd ever get the chance to wear. If you have a pair of heels, some jewelry, or a gown that you haven't worn because it's so unbelievably extravagant - this is your chance to wear it!`}</p>
@@ -103,7 +101,7 @@ const DressCode = () => {
                         <TextParallaxContent
                             key={index}
                             imgUrl={content.imgUrl}
-                            imgPadding={100}
+                            imgPadding={25}
                             heading={content.heading}
                             subheading={content.subheading}
                         >

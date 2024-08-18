@@ -70,7 +70,7 @@ export const SwipeCarousel = ({ imgs }: { imgs: string[] }) => {
                 }}
                 transition={SPRING_OPTIONS}
                 onDragEnd={onDragEnd}
-                className="flex cursor-grab flex-row justify-evenly items-center active:cursor-grabbing"
+                className="flex cursor-grab flex-row justify-start items-start active:cursor-grabbing"
             >
                 <Images imgIndex={imgIndex} imgs={imgs} />
             </motion.div>

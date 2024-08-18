@@ -268,46 +268,76 @@ export const POST = withApiAuthRequired(async function createUser(req: NextReque
         return NextResponse.json({ error: "Good job hiding the body." });
     }
 
+    console.log(body);
 
-    let post: User = {};
+
+    let post: User = {
+        name: body.name,
+        email: body.email,
+        role: body.role ?? 'guest',
+    };
 
     const sessionUser = await sql`
         SELECT *
         FROM users
         WHERE email = ${session.user.email}`;
 
+    if (!sessionUser.rows[0]) {
+
+        // If we don't have a user, make one.
+        const exec = await sql`
+INSERT INTO users (
+    name,
+    email,
+    role,
+    rsvp,
+    rehearsal_invite,
+    diet_restrictions,
+    song_recs
+)
+VALUES (
+    ${session.user.name},
+    ${session.user.email},
+    'guest',
+    false,
+    false,
+    '{}',
+    '{}'
+)`;
+        return NextResponse.json(exec);
+
+    }
+
 
     if (body.name) {
         post.name = body.name;
     }
 
+
+
     if (!body.email) {
 
         return NextResponse.json({ error: "Email is required." });
 
-    } else {
-
-        let user = await sql`SELECT * FROM users WHERE email = ${body.email}`;
-
-        if (user.rows[0]) {
-            return NextResponse.json({ error: "User already exists." });
-        }
-
-        let rx = new RegExp(`[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}`);
-
-        if (!rx.test(body.email)) {
-            return NextResponse.json({ error: "Invalid email." });
-        }
-
-        post.email = body.email;
-
     }
 
-    if (!body.rsvp) {
-        post.rsvp = false;
-    } else {
-        post.rsvp = body.rsvp;
+    let user = await sql`SELECT * FROM users WHERE email = ${body.email}`;
+
+
+    if (user.rows[0]) {
+        return NextResponse.json({ error: "User already exists." });
     }
+
+
+
+    let rx = new RegExp(`[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}`);
+
+    if (!rx.test(body.email)) {
+        return NextResponse.json({ error: "Invalid email." });
+    }
+
+    post.email = body.email;
+    post.rsvp = body.rsvp ?? false;
 
     if (!body.rehearsal_invite) {
         post.rehearsal_invite = false;
@@ -325,7 +355,7 @@ export const POST = withApiAuthRequired(async function createUser(req: NextReque
         post.role = 'guest';
     } else {
 
-        if (!adminRoles.includes(sessionUser.rows[0].role)) {
+        if (!adminRoles.includes(sessionUser.rows[0]?.role)) {
             return NextResponse.json({ error: "You don't have permission to update roles." });
         }
 
@@ -333,17 +363,8 @@ export const POST = withApiAuthRequired(async function createUser(req: NextReque
 
     }
 
-    if (!body.diet_restrictions) {
-        post.diet_restrictions = [];
-    } else {
-        post.diet_restrictions = body.diet_restrictions as string[];
-    }
-
-    if (!body.song_recs) {
-        post.song_recs = [];
-    } else {
-        post.song_recs = body.song_recs as string[];
-    }
+    post.diet_restrictions = body.diet_restrictions as string[] ?? [];
+    post.song_recs = body.song_recs as string[] ?? [];
 
     const exec = await sql`
 INSERT INTO users ( 

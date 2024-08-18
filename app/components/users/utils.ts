@@ -52,7 +52,11 @@ async function formatFetcher(uri: string, method: string, options?: User | UserG
         fetchOptions.body = JSON.stringify(options);
     }
 
-    const response = await fetch(uri, fetchOptions).then((res) => res.json());
+    const response = await fetch(uri, fetchOptions).then((res) => {
+
+        return res.json();
+    });
+
     return response;
 
 

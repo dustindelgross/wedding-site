@@ -69,10 +69,10 @@ export default withPageAuthRequired(function Home() {
             } else {
               const newUser = {
                 email: user.email,
-                name: user.name,
-                role: 'guest',
+                name: user.name
               };
               const createResponse = await formatFetcher(`/api/users`, 'POST', newUser);
+              console.log(createResponse);
               if (createResponse.ok) {
                 setCurrentUser(newUser);
               }

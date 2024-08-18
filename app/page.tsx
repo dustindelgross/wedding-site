@@ -88,7 +88,6 @@ export default withPageAuthRequired(function Home() {
 
   useEffect(() => {
     formatFetcher(`/api/users`, 'PUT', { ...currentUser });
-    console.log(currentUser)
   }, [currentUser]);
 
 
@@ -128,7 +127,7 @@ export default withPageAuthRequired(function Home() {
         <div className="flex flex-col justify-center items-center gap-12">
           <Section
             title={"The Venue"}
-            desc={"The wedding will be held at the beautiful Vaughan House in Forest, VA, on October 19th, 2024. Reception beginning at 4:00PM EST."}
+            desc={"The wedding will be held at the beautiful Vaughan House in Forest, VA, on October 19th, 2024. Ceremony beginning at 5:00PM EST."}
             cta={"View Venue Website"}
             href={"https://vaughan-house.com/"}
             external={true}

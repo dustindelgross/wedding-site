@@ -6,6 +6,7 @@ export const SpringModal = ({
   isOpen,
   setIsOpen,
   children,
+  dialog,
   confirmText,
   dismissText,
   handleConfirm,
@@ -14,10 +15,12 @@ export const SpringModal = ({
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   children?: React.ReactNode;
+  dialog? : string;
   confirmText?: string;
   dismissText?: string;
   handleConfirm?: () => void;
   handleDismiss?: () => void;
+
 }) => {
   return (
     <AnimatePresence>
@@ -37,15 +40,14 @@ export const SpringModal = ({
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0, y: 100 }}
             onClick={(e) => e.stopPropagation()}
-            className="bg-gradient-to-br from-violet-600 to-indigo-600 text-white p-6 rounded-lg w-full max-w-lg shadow-xl cursor-default relative overflow-hidden"
+            className="bg-blue-700 text-white p-6 rounded-lg w-full max-w-lg shadow-xl cursor-default relative overflow-hidden"
           >
-            <FiAlertCircle className="text-white/10 rotate-12 text-[250px] absolute z-0 -top-24 -left-24" />
             <div className="relative z-10">
-              <div className="bg-white w-16 h-16 mb-2 rounded-full text-3xl text-indigo-600 grid place-items-center mx-auto">
+              <div className="bg-white w-16 h-16 mb-2 rounded-full text-3xl text-blue-600 grid place-items-center mx-auto">
                 <FiAlertCircle />
               </div>
               <h3 className="text-3xl font-bold text-center mb-2">
-                You sure about that?
+                {dialog || `You sure about that?`}
               </h3>
               <div className="text-center mb-6">
                 {children || "This action is irreversible."}

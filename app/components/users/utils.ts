@@ -23,6 +23,10 @@ export type UserGetOptions = {
     limit?: number;
     offset?: number;
     list?: boolean;
+    playlist?: boolean;
+    track?: string;
+    tracks?: boolean;
+    search?: string;
 }
 
 interface FetchOptions {

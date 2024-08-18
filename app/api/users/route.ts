@@ -42,72 +42,72 @@ export const GET = withApiAuthRequired(async function getUsers(req: NextRequest)
 
     if (getParams.id) {
         users = await sql`
-            SELECT *
-            FROM users
-            WHERE id = ${parseInt(getParams.id as string)}`;
+        SELECT *
+        FROM users
+        WHERE id = ${parseInt(getParams.id as string)}`;
 
         return NextResponse.json(users);
     }
 
     if (getParams.name) {
         users = await sql`
-            SELECT *
-            FROM users
-            WHERE name LIKE ${getParams.name}%`;
+        SELECT *
+        FROM users
+        WHERE name LIKE ${getParams.name}%`;
 
         return NextResponse.json(users);
     }
 
     if (getParams.email) {
         users = await sql`
-            SELECT *
-            FROM users
-            WHERE email = ${getParams.email}`;
+        SELECT *
+        FROM users
+        WHERE email = ${getParams.email}`;
 
         return NextResponse.json(users);
     }
 
     if (getParams.role) {
         users = await sql`
-            SELECT *
-            FROM users
-            WHERE role = ${getParams.role}`;
+        SELECT *
+        FROM users
+        WHERE role = ${getParams.role}`;
 
         return NextResponse.json(users);
     }
 
     if (getParams.rsvp) {
         users = await sql`
-            SELECT *
-            FROM users
-            WHERE rsvp = ${getParams.rsvp}`;
+        SELECT *
+        FROM users
+        WHERE rsvp = ${getParams.rsvp}`;
 
         return NextResponse.json(users);
     }
 
     if (getParams.rehearsal_invite) {
         users = await sql`
-            SELECT *
-            FROM users
-            WHERE rehearsal_invite = ${getParams.rehearsal_invite}`;
+        SELECT *
+        FROM users
+        WHERE rehearsal_invite = ${getParams.rehearsal_invite}`;
 
         return NextResponse.json(users);
     }
 
     if (getParams.diet_restrictions) {
         users = await sql`
-            SELECT *
-            FROM users
-            WHERE diet_restrictions IN (${getParams.diet_restrictions})`;
+        SELECT *
+        FROM users
+        WHERE diet_restrictions IN (${getParams.diet_restrictions})`;
 
         return NextResponse.json(users);
     }
 
     if (getParams.song_recs) {
         users = await sql`
-            SELECT *
-            FROM users
-            WHERE song_recs IN (${getParams.song_recs})`;
+        SELECT *
+        FROM users
+        WHERE song_recs IN (${getParams.song_recs})`;
 
         return NextResponse.json(users);
     }
@@ -116,17 +116,17 @@ export const GET = withApiAuthRequired(async function getUsers(req: NextRequest)
 
     if (getParams.list) {
         users = await sql`
-            SELECT *
-            FROM users
-            LIMIT ${parseInt(getParams.limit as string)} OFFSET ${parseInt(getParams.offset as string)}`;
+        SELECT *
+        FROM users
+        LIMIT ${parseInt(getParams.limit as string)} OFFSET ${parseInt(getParams.offset as string)}`;
 
         return NextResponse.json(users);
     }
 
     users = await sql`
-        SELECT *
-        FROM users
-        WHERE email = ${session?.user.email}`;
+    SELECT *
+    FROM users
+    WHERE email = ${session?.user.email}`;
 
     return NextResponse.json(users);
 
@@ -156,14 +156,14 @@ export const PUT = withApiAuthRequired(async function updateUser(req: NextReques
     };
 
     const user = await sql`
-        SELECT *
-        FROM users
-        WHERE id = ${body.id}`;
+    SELECT *
+    FROM users
+    WHERE id = ${body.id}`;
 
     const sessionUser = await sql`
-            SELECT *
-            FROM users
-            WHERE email = ${session.user.email}`;
+        SELECT *
+        FROM users
+        WHERE email = ${session.user.email}`;
 
     if (body.name) {
         set.name = body.name;
@@ -195,7 +195,7 @@ export const PUT = withApiAuthRequired(async function updateUser(req: NextReques
         set.role = body.role;
     }
 
-    if (body.rehearsal_invite === undefined || body.rehearsal_invite === null ) {
+    if (body.rehearsal_invite === undefined || body.rehearsal_invite === null) {
         set.rehearsal_invite = user.rows[0].rehearsal_invite;
     } else {
 
@@ -236,15 +236,15 @@ export const PUT = withApiAuthRequired(async function updateUser(req: NextReques
     const formatArray = (arr: string[]) => `{${arr.map((item) => `"${item}"`).join(', ')}}`;
 
     const exec = await sql`
-    UPDATE users 
-    SET name = ${set.name}, 
-    email = ${set.email}, 
-    rsvp = ${set.rsvp}, 
-    role = ${set.role?.toLowerCase()},
-    rehearsal_invite = ${set.rehearsal_invite}, 
-    diet_restrictions = ${formatArray(set.diet_restrictions)}, 
-    song_recs = ${formatArray(set.song_recs)} 
-    WHERE id = ${set.id}`;
+UPDATE users 
+SET name = ${set.name}, 
+email = ${set.email}, 
+rsvp = ${set.rsvp}, 
+role = ${set.role?.toLowerCase()},
+rehearsal_invite = ${set.rehearsal_invite}, 
+diet_restrictions = ${formatArray(set.diet_restrictions)}, 
+song_recs = ${formatArray(set.song_recs)} 
+WHERE id = ${set.id}`;
 
     console.log(exec)
 
@@ -272,9 +272,10 @@ export const POST = withApiAuthRequired(async function createUser(req: NextReque
     let post: User = {};
 
     const sessionUser = await sql`
-            SELECT *
-            FROM users
-            WHERE email = ${session.user.email}`;
+        SELECT *
+        FROM users
+        WHERE email = ${session.user.email}`;
+
 
     if (body.name) {
         post.name = body.name;
@@ -345,24 +346,24 @@ export const POST = withApiAuthRequired(async function createUser(req: NextReque
     }
 
     const exec = await sql`
-    INSERT INTO users ( 
-        name, 
-        email, 
-        role,
-        rsvp, 
-        rehearsal_invite, 
-        diet_restrictions, 
-        song_recs 
-    )
-    VALUES (
-        ${post.name}, 
-        ${post.email}, 
-        ${post.role},
-        ${post.rsvp}, 
-        ${post.rehearsal_invite}, 
-        ${formatArray(post.diet_restrictions)},
-        ${formatArray(post.song_recs)}
-    )`;
+INSERT INTO users ( 
+    name, 
+    email, 
+    role,
+    rsvp, 
+    rehearsal_invite, 
+    diet_restrictions, 
+    song_recs 
+)
+VALUES (
+    ${post.name}, 
+    ${post.email}, 
+    ${post.role},
+    ${post.rsvp}, 
+    ${post.rehearsal_invite}, 
+    ${formatArray(post.diet_restrictions)},
+    ${formatArray(post.song_recs)}
+)`;
 
     return NextResponse.json(exec);
 
@@ -386,9 +387,9 @@ export const DELETE = withApiAuthRequired(async function deleteUser(req: NextReq
     let del: User = {};
 
     const sessionUser = await sql`
-            SELECT *
-            FROM users
-            WHERE email = ${session.user.email}`;
+        SELECT *
+        FROM users
+        WHERE email = ${session.user.email}`;
 
     if (!adminRoles.includes(sessionUser.rows[0].role)) {
         return NextResponse.json({ error: "You don't have permission to delete users." });
@@ -405,17 +406,17 @@ export const DELETE = withApiAuthRequired(async function deleteUser(req: NextReq
     }
 
     const user = await sql`
-        SELECT *
-        FROM users
-        WHERE id = ${del.id}`;
+    SELECT *
+    FROM users
+    WHERE id = ${del.id}`;
 
     if (!user.rows[0]) {
         return NextResponse.json({ error: "User not found." });
     }
 
     const exec = await sql`
-    DELETE FROM users 
-    WHERE id = ${del.id}`;
+DELETE FROM users 
+WHERE id = ${del.id}`;
 
     return NextResponse.json(exec);
 

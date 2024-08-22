@@ -53,7 +53,7 @@ export const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 z-50 h-min min-h-[60px] w-full bg-opacity-90 bg-[#f0f0f0]">
+    <header className="fixed top-0 z-50 min-h-[60px] w-full bg-opacity-90 bg-[#f0f0f0]">
       <div className="flex flex-col w-full gap-6 h-full p-10">
         <div className="flex items-center justify-between w-full max-w-[100vw] text-center">
           <Link

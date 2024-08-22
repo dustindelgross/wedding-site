@@ -188,7 +188,7 @@ const TabFeature = ({ children, heading, link }: TabProps) => {
 
 export default function Accommodations() {
     return (
-        <main className="flex min-h-screen flex-col items-start gap-12 pt-48 px-24">
+        <main className="flex min-h-screen flex-col items-start gap-12 md:py-48 py-80 px-24">
             <div className="flex flex-col justify-center gap-6">
                 <h1 className="text-4xl font-bold max-w-[75ch]">{`Accommodations`}</h1>
                 <h2 className="text-3xl font-bold ">{`Housing`}</h2>

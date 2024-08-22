@@ -94,7 +94,7 @@ const DressCode = () => {
     ];
 
     return (
-        <main className="flex min-h-screen flex-col items-start py-48 relative">
+        <main className="flex min-h-screen flex-col items-start md:py-48 py-80 relative">
             <div className="flex flex-col items-center justify-center w-full h-full relative">
                 {dressCodeContent.map((content, index) => {
                     return (

@@ -29,7 +29,7 @@ const housingContent: TabProps[] = [
         heading: "Carriage House Inn",
         link: "https://www.carriagehouseinnandevents.com/",
         children: (<>
-        <p><i>This is a small business.</i></p>
+            <p><i>This is a small business.</i></p>
             <p>Has a hotel space on premises that can sleep up to 18 guests. Also has select rooms from $87/night. Right next to downtown Lynchburg, about 30 minutes from the wedding venue.</p>
             <p>Price: <b>~$90/night for select rooms, ~$650/night for the Hotel Cabell</b></p>
             <address>{`404 Cabell St, Lynchburg, VA 24504`}</address>
@@ -92,7 +92,7 @@ const airportContent: TabProps[] = [
         heading: "Charlotte Douglas International Airport (CLT)",
         link: "https://cltairport.com/",
         children: (<>
-        <p><i>This is a major airport with service to most major US cities.</i></p>
+            <p><i>This is a major airport with service to most major US cities.</i></p>
             <p>Airlines: <b>Served by most major airlines</b></p>
             <p>Car rentals: <b>Alamo, Avis, Budget, Dollar, Enterprise, Hertz, National, Sixt</b></p>
             <p>Proximity to Lynchburg: <b>~3 hours by car, ~1.25 hours if flying to LYH</b></p>
@@ -188,13 +188,17 @@ const TabFeature = ({ children, heading, link }: TabProps) => {
 
 export default function Accommodations() {
     return (
-        <main className="flex min-h-screen flex-col items-start gap-12 md:py-48 py-80 px-24">
+        <main className="flex min-h-screen flex-col items-start gap-12 md:py-48 py-80 px-10 md:px-24">
+            <h1 className="text-4xl font-bold max-w-[75ch]">{`Accommodations`}</h1>
             <div className="flex flex-col justify-center gap-6">
-                <h1 className="text-4xl font-bold max-w-[75ch]">{`Accommodations`}</h1>
-                <h2 className="text-3xl font-bold ">{`Housing`}</h2>
-                <Tabs tabs={housingContent} />
-                <h2 className="text-3xl font-bold ">{`Airports & Car Rentals`}</h2>
-                <Tabs tabs={airportContent} />
+                <div>
+                    <h2 className="text-3xl font-bold ">{`Housing`}</h2>
+                    <Tabs tabs={housingContent} />
+                </div>
+                <div>
+                    <h2 className="text-3xl font-bold ">{`Airports & Car Rentals`}</h2>
+                    <Tabs tabs={airportContent} />
+                </div>
             </div>
         </main>
     );

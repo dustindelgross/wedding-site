@@ -16,7 +16,7 @@ export const Button = ({ text, Icon, href, handleClick, withAnchor, external }: 
     const tailwind = `
     relative z-0 flex items-center gap-2 overflow-hidden rounded border-[1px] 
     border-blue-700 px-4 py-2 font-bold
-    uppercase text-blue-700 transition-all duration-500
+    text-blue-700 transition-all duration-500
     
     before:absolute before:inset-0
     before:-z-10 before:translate-x-[150%]
@@ -28,7 +28,11 @@ export const Button = ({ text, Icon, href, handleClick, withAnchor, external }: 
     hover:scale-105 hover:text-neutral-300
     hover:before:translate-x-[0%]
     hover:before:translate-y-[0%]
-    active:scale-95`;
+    active:scale-95
+
+    text-sm
+    md:text-base
+    `;
 
     if (href) {
         return (

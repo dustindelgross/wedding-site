@@ -19,10 +19,10 @@ interface SectionProps {
 
 const Section = ({ title, desc, cta, clickHandler, href, external }: SectionProps) => {
   return (
-    <div className="flex flex-col justify-center items-center py-24 odd:bg-stone-200 w-[100vw]">
+    <div className="flex flex-col justify-center items-center py-24 px-6 odd:bg-stone-200 w-[100vw]">
       <div className="flex flex-col justify-center items-center gap-6">
         <h2 className="text-4xl font-bold text-center ">{title}</h2>
-        <p className="max-w-[75ch]">{desc}</p>
+        <p className="max-w-[75ch] text-center">{desc}</p>
         <div className="max-w-full w-auto">
           <Button text={cta} href={href} external={external} handleClick={clickHandler} />
         </div>
@@ -43,7 +43,7 @@ export default withPageAuthRequired(function Home() {
   const tailwind = `
   relative z-0 flex items-center gap-2 overflow-hidden rounded border-[1px] 
   border-blue-700 px-4 py-2 font-bold
-  uppercase text-blue-700 transition-all duration-500
+  text-blue-700 transition-all duration-500
   
   before:absolute before:inset-0
   before:-z-10 before:translate-x-[150%]
@@ -72,7 +72,6 @@ export default withPageAuthRequired(function Home() {
                 name: user.name
               };
               const createResponse = await formatFetcher(`/api/users`, 'POST', newUser);
-              console.log(createResponse);
               if (createResponse.ok) {
                 setCurrentUser(newUser);
               }
@@ -93,38 +92,35 @@ export default withPageAuthRequired(function Home() {
 
   if (user && !isLoading && currentUser) {
 
-    /* The rest of the code below */
-
     return (
-      <main className="flex min-h-screen flex-col items-center gap-12 py-48">
+      <main className="flex min-h-screen flex-col items-center gap-12 py-80 md:py-48">
         <ShiftingCountdown />
         <div className="flex flex-col justify-center items-center gap-6 max-w-[75ch]">
-          <h1 className={`text-4xl font-bold text-center max-w-[75ch] ${laBelleAurore.className}`}>{`Welcome to the Wedding${currentUser?.name ? `, ${currentUser.name}` : ""}`}</h1>
+          <h1 className={`px-6 text-3xl font-bold text-center max-w-[75ch] ${laBelleAurore.className}`}>{`Welcome to the Wedding${currentUser?.name ? `, ${currentUser.name}` : ""}`}</h1>
           {currentUser?.rsvp === false || !currentUser?.rsvp && (
-            <p className="text-center">Please RSVP by August 1st, 2024</p>
+            <p className="text-center">{`Please RSVP by September 20th, 2024`}</p>
           )}
           {currentUser && (
             <div className="flex flex-col gap-4 items-center">
               <h2 className="text-2xl font-bold">RSVP</h2>
-              <h3 className="text-xl">Your current RSVP status: <b>{currentUser.rsvp === false || !currentUser.rsvp ? "Not Attending" : "Attending"}</b></h3>
               {currentUser.rsvp === false || !currentUser.rsvp ?
                 <button className={tailwind} onClick={function (this: HTMLButtonElement) {
                   formatFetcher(`/api/users`, 'GET', { email: user?.email }).then((data) => {
                     let rsvpUser = data.rows[0] as User;
                     setCurrentUser({ ...rsvpUser, rsvp: true });
                   });
-                }}>{`I'm attending`}</button> :
+                }}>{`I Will Not Be Attending`}</button> :
                 <button className={tailwind} onClick={function (this: HTMLButtonElement) {
                   formatFetcher(`/api/users`, 'GET', { email: user?.email }).then((data) => {
                     let rsvpUser = data.rows[0] as User;
                     setCurrentUser({ ...rsvpUser, rsvp: false });
                   });
-                }}>{`I won't be attending`}</button>
+                }}>{`I'm Attending`}</button>
               }
             </div>
           )}
         </div>
-        <div className="flex flex-col justify-center items-center gap-12">
+        <div className="flex flex-col justify-center items-center gap-12 ">
           <Section
             title={"The Venue"}
             desc={"The wedding will be held at the beautiful Vaughan House in Forest, VA, on October 19th, 2024. Ceremony beginning at 5:00PM EST."}

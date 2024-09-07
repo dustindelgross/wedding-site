@@ -2,6 +2,7 @@
 import { User, formatFetcher } from "./components/users/utils";
 import ShiftingCountdown from "./components/ShiftingCountdown";
 import { Button } from "./components/Button";
+import { FiCheck } from "react-icons/fi";
 import { useEffect, useState, MouseEventHandler } from "react";
 import { laBelleAurore } from "./components/fonts";
 import { Drawer } from "./components/Drawer";
@@ -46,11 +47,12 @@ export default withPageAuthRequired(function Home() {
   text-blue-700 transition-all duration-500
   
   before:absolute before:inset-0
-  before:-z-10 before:translate-x-[150%]
-  before:translate-y-[150%] before:scale-[2.5]
+  before:-z-10 
+  before:scale-[2.5]
   before:rounded-[100%] before:bg-blue-700
   before:transition-transform before:duration-1000
   before:content-[""]
+  ${ currentUser?.rsvp === true ? 'text-neutral-300 before:translate-x-[0%] before:translate-y-[0%]' : 'before:translate-x-[150%] before:translate-y-[150%] text-blue-700' }
 
   hover:scale-105 hover:text-neutral-300
   hover:before:translate-x-[0%]
@@ -102,7 +104,7 @@ export default withPageAuthRequired(function Home() {
           )}
           {currentUser && (
             <div className="flex flex-col gap-4 items-center">
-              <h2 className="text-2xl font-bold">RSVP</h2>
+              <h2 className="text-2xl font-bold">{`RSVP`}</h2>
               {currentUser.rsvp === false || !currentUser.rsvp ?
                 <button className={tailwind} onClick={function (this: HTMLButtonElement) {
                   formatFetcher(`/api/users`, 'GET', { email: user?.email }).then((data) => {
@@ -115,7 +117,7 @@ export default withPageAuthRequired(function Home() {
                     let rsvpUser = data.rows[0] as User;
                     setCurrentUser({ ...rsvpUser, rsvp: false });
                   });
-                }}>{`I'm Attending`}</button>
+                }}>{`I'm Attending`}<FiCheck /></button>
               }
             </div>
           )}

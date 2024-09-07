@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import UserGreeting from "./UserGreeting";
+import { SpringModal } from "./SpringModal";
 
 export const Header = () => {
   const [navExpanded, setNavExpanded] = useState(false);

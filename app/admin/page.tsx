@@ -225,11 +225,7 @@ export default withPageAuthRequired(function Admin() {
         setCurrentUser(fetchedUser);
       });
     }
-   /*  formatFetcher('/api/spotify', 'GET', {
-      search: 'hozi'
-    }).then(data => {
-      console.log(data)
-    }) */
+   
   }, [user, isLoading]);
 
   return (

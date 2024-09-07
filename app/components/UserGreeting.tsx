@@ -33,14 +33,16 @@ export default withPageAuthRequired(function UserGreeting() {
 
     const UserFormModal = ({ user, open, setOpen }: { user: User | null, open: boolean, setOpen: Dispatch<SetStateAction<boolean>> }) => {
 
-      if (!user) return null;
-      if (!user.id) return null;
+      
 
       const [userShallowCopy, setUserShallowCopy] = useState<User | null>(null);
 
       useEffect(() => {
         setUserShallowCopy(user);
       }, []);
+
+      if (!user) return null;
+      if (!user.id) return null;
 
       if ( !userShallowCopy )  return null;
     

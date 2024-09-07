@@ -20,6 +20,7 @@ export const GET = withApiAuthRequired(async function getUsers(req: NextRequest)
     const res = new NextResponse();
     const session = await getSession(req, res);
     const { searchParams } = new URL(req.url);
+    console.log(searchParams)
     const getParams = {
         id: searchParams.get('id'),
         name: searchParams.get('name'),

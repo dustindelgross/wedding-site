@@ -193,42 +193,6 @@ const TableRow = ({ user, setUser, setOpen, setToDelete, setDeleteOpen }: { user
   );
 };
 
-async function getToken() {
-
-  /* const fetching = await fetch('/api/spotify');
-
-  console.log(fetching.json())
-  return fetching;
-
-  console.log(process.env.SPOTIFY_CLIENT_ID, process.env.SPOTIFY_CLIENT_SECRET) */
-
-
-
-  const response = await fetch('https://accounts.spotify.com/api/token', {
-    method: 'POST',
-    body: new URLSearchParams({
-      'grant_type': 'client_credentials'
-    }),
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Basic ' + (Buffer.from( process.env.SPOTIFY_CLIENT_ID + ':' + process.env.SPOTIFY_CLIENT_SECRET).toString('base64'))
-    }
-
-  });
-
-  return await response.json();
-
-}/* 
-
-async function getPlaylist(access_token: string) {
-
-  const response = await fetch('https://api.spotify.com/v1/playlists/process.env.SPOTIFY_PLAYLIST_ID', {
-    method: 'GET',
-    headers: { 'Authorization': 'Bearer ' + access_token }
-  });
-
-  return await response.json();
-} */
 
 export default withPageAuthRequired(function Admin() {
 
@@ -275,8 +239,10 @@ export default withPageAuthRequired(function Admin() {
         {/* Additional check here to make sure the user is an admin */}
         {currentUser && adminRoles.includes(currentUser.role!) && (
           <>
-            <h1 className="text-4xl font-bold text-center max-w-[75ch]">Dashboard</h1>
-
+            <h1 className="text-4xl font-bold text-center max-w-[75ch]">{`Dashboard`}</h1>
+            <div className={`text-xl flex flex-row justify-evenly items-center`}>
+              <p>{`${users.filter((item) => item.rsvp === true).length} out of ${users.length} users have RSVP'd.`}</p>
+            </div>
             <div className="w-full bg-white shadow-lg rounded-lg overflow-x-scroll max-w-4xl mx-auto">
               <table className="w-full">
                 <thead>

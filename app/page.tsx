@@ -143,14 +143,14 @@ export default withPageAuthRequired(function Home() {
             cta={"Learn More"}
             href={"/dress-code"}
           />
-          <Section
+          {/* <Section
             title={"The Food"}
             desc={"We will be serving a variety of dishes, including vegetarian and vegan options."}
             cta={"View Menu"}
             clickHandler={() => {
               setMenuOpen(true);
             }}
-          />
+          /> */}
           {currentUser?.rehearsal_invite && (
             <Section
               title={"The Rehearsal Brunch"}
@@ -162,7 +162,7 @@ export default withPageAuthRequired(function Home() {
         </div>
 
 
-        <Drawer open={menuOpen} setOpen={setMenuOpen}>
+        {/* <Drawer open={menuOpen} setOpen={setMenuOpen}>
           <div className="mx-auto max-w-2xl space-y-4 text-neutral-400">
             <h2 className="text-4xl font-bold ">The Menu</h2>
             <p className="max-w-[75ch]">The menu is still coming together; check back here again soon for updates!</p>
@@ -170,7 +170,7 @@ export default withPageAuthRequired(function Home() {
 
             </div>
           </div>
-        </Drawer>
+        </Drawer> */}
         {currentUser?.rehearsal_invite && (
           <Drawer open={rehearsalOpen} setOpen={setRehearsalOpen}>
             <div className="mx-auto max-w-2xl space-y-4 text-neutral-400">

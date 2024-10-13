@@ -46,12 +46,12 @@ export const Header = () => {
   };
 
   const NavLinks = [
-    { href: "/schedule", text: "Schedule of Events" },
+    /* { href: "/schedule", text: "Schedule of Events" }, */
     { href: "/dress-code", text: "Dress Code" },
     { href: "/accommodations", text: "Accommodations" },
     { href: "https://www.honeyfund.com/site/hatmaker-delgross-10-19-2024", text: "Honey Fund" },
     { href: "https://www.amazon.com/wedding/share/dustinandbella", text: "Registry" },
-    { href: "/contact", text: "Contact" }
+    /* { href: "/contact", text: "Contact" } */
   ];
 
   return (
